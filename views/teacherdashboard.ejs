@@ -1,0 +1,247 @@
+<%- include('partials/side-nav'); -%>
+  
+
+<div class="side-nav-content p-3" >
+  <div id='dd' class="scheduled mb-3" style="justify-content: space-between;"><p></p><div class="theme-heading top-welcome" style="padding-top: 0%;">Welcome</div><p></p></div>
+  
+  <%errors.forEach((err)=>{%>
+    <p><%=err%></p>
+  <%})%>
+
+<div class="content">
+
+<section class="discussion">
+<div class="card-container" id="aT" >
+  <div class="each-card text-center" >
+    <div class="col s12 m6">
+      <div class="card" style="background-color: #3b3838 !important;">
+        <div class="card-content white-text">
+          <h2>Schedule a Discussion</h2>
+          <div class="frm-icn"  style="background-color: #3b3838 !important;"><div style="width: 60%;">  <%- include('../assets/svg/school.svg') %>
+          </div> </div>
+          <form action="/teacher/discussion/add" method="POST">
+            <div class="form-group white-text">
+              <div class="input-field col s6">
+                <input
+                    type="text"
+                    name="discussion[admin]"
+                    value="<%=currentUser.name%>"
+                    class="white-text"
+                    style="border-color: white;"
+                    readonly
+                />
+                
+                <label
+                  for="last_name"
+                  class="white-text"
+                  style="pointer-events: none;"
+                  >Name:</label
+                >
+              </div>
+              <div class="input-field col s6">
+                <input
+                  type="text"
+                  name="discussion[email]"
+                  value="<%=currentUser.email%>"
+                  class="white-text"
+                  style="border-color: white;"
+                  readonly
+                />
+                <label
+                  for="last_name"
+                  class="white-text"
+                  style="pointer-events: none;"
+                  >Email:</label
+                >
+              </div>
+              <div class="input-field col s6">
+                <input
+                type="text"
+                name="discussion[roomId]"
+                placeholder="Create you personalised Room for discussion" 
+                class="validator white-text"
+                style="border-color: white;"
+                required
+                />
+              <label class="white-text" style="pointer-events: none;">RoomId</label><br />
+              </div>
+              <label for="meeting" class="white-text" style="font-size: 1.4rem;">Date and Time</label>
+
+              <div class="input-field col s6">
+                <input type="datetime-local" id="birthdaytime" class="validator white-text" style="border-color: white;" name="discussion[scheduledTime]" required>
+                </div>
+              <button
+              type="submit"
+                class="btn btn-primary white darken-1"
+                style="color: #07031a;"
+              >
+                Submit!
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<section class="dashboard">
+  <div class="svg-T">
+    <%- include('../assets/svg/teacher.svg') -%>
+  </div>
+<div class="scheduled">
+  <div class="sche-dash m-3">
+    <h2 class="text-center">Scheduled Discussions</h2>
+    <%discussions.forEach(function(discussion){%>
+      <div>
+        <span>Scheduled time :</span>  <%=moment(discussion.scheduledTime).format('MMMM Do YYYY, h:mm:ss a')%><br>
+        <span>Room id :</span>  <%=discussion.roomId%><br>
+          <a class="waves-effect waves-light btn text-center " href="/teacher/dashboard/enter/discussion?room=<%=discussion.roomId%>&user=<%=currentUser.email%>"><i class="fas fa-pencil-alt"></i>Edit</a>
+      </div>
+    <%})%>
+  </div>
+  
+  <div class="sche-dash m-3">
+    <h2 class="text-center">Scheduled Tests</h2>
+    <%meetings.forEach(function(meeting){%>
+      <div>
+          <span>Scheduled time :</span>  <%=moment(meeting.scheduledTime).format('MMMM Do YYYY, h:mm:ss a')%><br>
+          <span>Room id :</span>  <%=meeting.roomId%><br>
+           <a class="waves-effect waves-light btn text-center " alt="edit" href="/teacher/dashboard/meeting/<%=meeting.roomId%>"><i class="fas fa-pencil-alt" ></i>Edit</a>
+      </div>
+    <%})%>
+  </div>
+</div>
+</section>
+
+<section class = "test">
+<div class="card-container" id="aS">
+  <div class="each-card text-center" >
+    <div class="col s12 m6">
+      <div class="card" style="background-color: #3b3838 !important;">
+        <div class="card-content white-text">
+          <h2>Schedule a Test</h2>
+          <div class="frm-icn"  style="background-color: #3b3838 !important;"><div style="width: 60%;" >  <%- include('../assets/svg/exam.svg') %></div> </div>
+          <form action="/teacher/meeting/add" method="POST">
+            <div class="form-group white-text">
+              <div class="input-field col s6">
+                <input
+                    type="text"
+                    name="meeting[admin]"
+                    value="<%=currentUser.name%>"
+                    class="white-text"
+                        style="border-color: white;"
+                    readonly
+                />
+                
+                <label
+                  for="last_name"
+                  class="white-text"
+                  style="pointer-events: none;"
+                  >Name:</label
+                >
+              </div>
+              <div class="input-field col s6">
+                <input
+                  type="text"
+                  name="meeting[email]"
+                  value="<%=currentUser.email%>"
+                  class="white-text"
+                        style="border-color: white;"
+                  readonly
+                />
+                <label
+                  for="last_name"
+                  class="white-text"
+                  style="pointer-events: none;"
+                  >Email:</label
+                >
+              </div>
+              <div class="input-field col s6">
+                <input
+                type="text"
+                name="meeting[roomId]"
+                placeholder="Create you personalised Room for Test" 
+                class="validator white-text"
+                      style="border-color: white;"
+                      required
+                />
+              <label class="white-text" style="pointer-events: none;">RoomId</label><br />
+              </div>
+              <label for="meeting" class="white-text" style="font-size: 1.4rem;">Date and Time</label>
+
+              <div class="input-field col s6">
+                <input type="datetime-local" id="birthdaytime" class="validator white-text" style="border-color: white;" name="meeting[scheduledTime]" required>
+                </div>
+              <button
+                class="btn btn-primary white darken-1"
+                style="color: #07031a;"
+              >
+                Submit!
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+</div>
+</div>
+<script>
+  var teacherNav = document.querySelectorAll('#teacher-nav');
+  teacherNav.forEach((teacherNav) => {
+  teacherNav.innerHTML = '';
+  const navLinks = `<a id="dshbrd" href="#" onclick="dashboard()"
+        ><i class="fas fa-desktop"></i><span>Dashboard</span></a
+      >
+      <a href="#" onclick="discussion()"
+        ><i class="fas fa-th"></i><span>New Discussion</span></a
+      >
+      <a href="#" onclick="test()"
+        ><i class="far fa-file-alt"></i><span>New Test</span></a
+      >
+      <a class="hme" href="#"><i class="fas fa-info-circle"></i><span>Home</span></a>
+      <a href="#"><i class="fas fa-sliders-h"></i><span>Settings</span></a>`;
+    teacherNav.innerHTML = navLinks;});
+  document.querySelectorAll('.hme').forEach(link => link.href = location.hostname);
+    function showTime(){
+      var i = 0;
+    document.querySelectorAll("#dd p").forEach(d => {
+      if( i === 0){
+        d.textContent="Date: "+moment(Date.now()).format('Do-MM-YYYY');
+        i = 1
+      }
+      else {d.textContent="Time: "+ moment(Date.now()).format('hh.mm.ss a');i=0;}
+    });
+    }
+    setInterval(showTime,1);
+</script>
+<script>
+  function dateFunction(e){
+    var date = e.target.value;
+    console.log(date)
+}
+function submitForm(e){
+    var date = e.target;
+    console.log(date);
+}
+function timeFunction(e){
+    var time = e.target.value;
+    console.log(time)
+}
+</script>
+
+<script>
+    if (window.performance) {
+    }
+    if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+      location.href = 'https://eduon-unifolks.herokuapp.com/teacher/dashboard?f=1';
+    } else {
+    }
+</script>
+<%- include('partials/footer'); -%>

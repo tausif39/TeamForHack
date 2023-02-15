@@ -1,48 +1,60 @@
-const GoogleStrategy = require("passport-google-oauth2").Strategy;
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const passport = require("passport");
 const keys = require("../config/keys");
-
-const User = require("../models/User");
+const Student = require("../models/Student");
+const SuperUser = require("../models/SuperUser");
+const Teacher = require("../models/Teacher");
 
 passport.use(
-  new GoogleStrategy(
-    {
-      clientID: keys.clientID,
-      clientSecret: keys.clientSecret,
-      callbackURL: "http://localhost:3000/auth/google/callback",
-    },
-    function (accessToken, refreshToken, profile, done) {
-      User.findOne({ googleId: profile.id }, async (err, user) => {
-        if (err) {
-          return done(err);
+    new GoogleStrategy(
+        {
+            clientID: keys.clientID,
+            clientSecret: keys.clientSecret,
+            callbackURL: "https://eduon-unifolks.herokuapp.com/auth/google/callback"
+        },
+        async function(accessToken, refreshToken, profile, done){
+            Student.findOne({email:profile.emails[0].value},async (err,student)=>{
+              if(err){
+                  return done(err);
+              }
+              else if(!student){
+                SuperUser.findOne({email:profile.emails[0].value},async (err,superuser)=>{
+                   if(err){
+                       return done(err);
+                   }else if(superuser){
+                    superuser.accessToken.push(accessToken);
+                    await superuser.save();
+                    return done(err,superuser);
+                   }else if(!superuser){
+                       Teacher.findOne({email:profile.emails[0].value},async (err,teacher)=>{
+                           if(err){
+                               return done(err);
+                           }else if(teacher){
+                            teacher.accessToken.push(accessToken);
+                            await teacher.save();
+                            return done(err,teacher);
+                           }else{
+                               return done(err);
+                           }
+                       })
+                   }
+                });
+               }
+               else if (student) {
+                student.accessToken.push(accessToken);
+                await student.save();
+                return done(err, student);
+               }
+            });
         }
-        if (user) {
-          user.accessToken.push(accessToken);
-          await user.save();
-          return done(err, user);
-        } else if (!user) {
-          const x = {
-            email: profile.emails[0].value,
-            displayPicture: profile.photos[0].value,
-            name: profile._json.name,
-            googleId: profile.id,
-          };
-          User.create(x, async (err, newUser) => {
-            console.log(newUser);
-            newUser.accessToken.push(accessToken);
-            await newUser.save();
-            return done(err, newUser);
-          });
-        }
-      });
-    }
-  )
-);
+    )
+)
 
 passport.serializeUser(function (user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function (user, done) {
-  done(null, user);
-});
+    done(null, user);
+  });
+  
+  passport.deserializeUser(function (user, done) {
+    done(null, user);
+  });
+  

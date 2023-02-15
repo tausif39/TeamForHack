@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+/* #svg-teacher {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
+  border-bottom-left-radius: 8%;
+} */
+.frm-icn {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  background: #023047;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.chat-cont{
+  position: fixed;
+  right: 2%;
+  z-index: 1002;
+}
+.chat-cont a i{
+  font-size: 1.7rem;
+}
+.frm-icn i {
+  font-size: 50px;
+}
+input:focus {
+  border: none !important;
+}
+.input-field label {
+  font-size: 1.2rem !important;
+}
+.datepicker-container {
+  display: inline-block !important;
+  opacity: 1 !important;
+}
+#svg-teacher {
+  position: relative;
+  max-width: 60vw;
+  min-height: 30vmin;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.svg-T{
+  min-height: fit-content;
+}
+#blueBalls path:nth-child(1) {
+  animation: fadeballs 1.5s linear alternate infinite;
+}
+#svg-teacher #blueBalls path:nth-child(2) {
+  animation: fadeballs 1.5s linear alternate infinite 0.5s;
+}
+#Outline-ball {
+  animation: bounce 0.5s ease-in alternate infinite;
+}
+.seperator{
+  height: 1px;
+  width: 100%;
+  background: rgba(153, 153, 153, 0.459);
+}
+#board-lines path {
+  stroke-dasharray: 1000px;
+  stroke-dashoffset: 100px;
+}
+@keyframes bounce {
+  from {
+    transform: translateY(-3%);
+  }
+  to {
+    transform: translateY(8%);
+  }
+}
+@keyframes fadeballs {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.sche-dash {
+  background-color: #f2f4fa;
+  padding: 0.5rem;
+  padding: 1rem;
+  min-width: 700px;
+  border-radius: 15px;
+}
+.sche-dash h2,
+.sche-dash div {
+  margin: auto;
+  background-color: #fff;
+  margin-bottom: 9px;
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+.sche-dash div span {
+  font-size: larger;
+  font-weight: 400;
+}
+.sche-dash div a i {
+  font-size: 1rem;
+  margin-right: 3px;
+}
+.sche-dash h2 {
+  padding: 1rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #023047;
+}
+.scheduled {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.stud-row {
+  position: relative;
+  width: 100%;
+  left: 15%;
+}
+
+#stat {
+  position: relative;
+  left: 5%;
+  width: 90% !important;
+}
+#attendance {
+  width: 60% !important ;
+  height: 50% !important;
+}
+.at-cont {
+  width: 70%;
+  position: relative;
+  margin: auto;
+}
+.attend-target {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+}
+.attend-target div p {
+  margin-bottom: 0.75rem !important;
+}
+.countDown {
+  font-family: 'Russo One', sans-serif;
+  justify-content: center;
+  background: rgba(87, 214, 190, 1);
+  background: -webkit-linear-gradient(
+    90deg,
+    rgba(87, 214, 190, 1) 0%,
+    rgba(28, 150, 175, 1) 100%
+  );
+  background: -moz-linear-gradient(
+    90deg,
+    rgba(87, 214, 190, 1) 0%,
+    rgba(28, 150, 175, 1) 100%
+  );
+  background: linear-gradient(
+    90deg,
+    rgba(87, 214, 190, 1) 0%,
+    rgba(28, 150, 175, 1) 100%
+  );
+  border-radius: 20px;
+}
+.countDown p {
+  font-size: 3rem;
+}
+#dd p{
+  font-size: larger;
+}
+.theme-heading {
+  color: #023047;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode';
+  font-size: 30px !important;
+}
+.card-title {
+  text-transform: capitalize;
+}
+#message-form{
+  position: absolute;
+  bottom: 0%;
+  display: flex;
+  flex-direction: row;
+  width: 100% ;
+  padding-top: .5rem;
+  margin-left: -2%;
+  border-top: 1px solid #e3e3e3;
+  background-color: #fafafa;
+} #ip{
+  width: 90%;
+  padding-left: .3rem;
+}
+#messages div span{
+  font-weight: bold;
+  font-size: 108%;
+  text-transform: capitalize;
+}
+#addQuestion{
+  background: #fff;
+  padding: 22px;
+  border-radius: 10px;
+  margin-top:10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 1px #505050;
+}
+.card-content select{
+  border: 1px solid #023047;
+}
+.frm div{
+  width: 100% !important;
+}
+#myModal{
+  padding-right: 0px !important;
+  max-height: 40% !important;
+}
+#myModal .modal-dialog{
+  margin: 0px !important;
+  max-width: 100%;
+  max-height: 100%;
+  height: 100% !important;
+  width: 100%;
+}
+#myModal .modal-dialog .modal-content{
+  width: 100%;
+  height: 100% !important;
+}
+@media screen and (max-width: 1280px) {
+  
+  .sche-dash {
+    min-width: 90%;
+    font-size: small;
+  }
+  .sche-dash h2 {
+    font-size: 35px;
+  }
+  .at-cont {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 750px) {
+  .svg-T{
+    margin-top: -20%;
+    margin-bottom: -15%;
+  }
+  body {
+    font-size: smaller;
+  }
+  .sche-dash h2 {
+    font-size: 28px;
+  }
+  .sche-dash div a {
+    font-size: 10px !important;
+    padding: 5px !important;
+    padding-top: 0px !important;
+  }
+  .sche-dash {
+    min-width: 90%;
+    font-size: smaller;
+  }
+}
+@media screen and (max-width: 590px){
+  .svg-T{
+    margin-top: -35%;
+    margin-bottom: -25%;
+  }
+}
+@media screen and (max-width: 430px){
+  .svg-T{
+    margin-top: -230px;
+    margin-bottom: -200px;
+  }
+}

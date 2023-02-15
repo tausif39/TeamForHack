@@ -1,0 +1,284 @@
+<%- include('partials/side-nav'); -%>
+<div class="side-nav-content p-3">
+    <div id="dd" class="scheduled mb-3" style="justify-content: space-between">
+        <p></p>
+        <p></p>
+      </div>
+    <div class="chat-cont text-right">
+      <a class="waves-effect waves-light btn modal-trigger btn-floating" href="#chat-teacher">      <i class="fas fa-comments"></i>
+      </a><p>Chat</p>
+    </div>
+  
+    <div class="stud-row">
+        <div class="row">
+          <div class="col s12 m7">
+            <div class="card" style="width: 70%;">
+              <div class="card-title text-center p-3 blue-grey lighten-5">Discussion Room</div>
+              <div class="card-image p-3" style="height: 40vh; overflow: hidden;" >
+                <img src="/images/discussion.svg" style="height: 100%;">
+              </div>
+                <div class="card-content">
+                    <div style="font-size: larger;">Room Id :  <%=discussion.roomId%></div>
+                    <div style="font-size: larger;"> Time : <%=moment(discussion.scheduledTime).format('MMMM Do YYYY, h:mm:ss a')%></div>
+                    <form class="mt-4" action="/teacher/discussion/updatetiming/<%=discussion.roomId%>/<%=currentUser.email%>" method="POST" >
+                        <label>Edit Scheduled Time</label>
+                        <input type="datetime-local" value="<%=moment(discussion.scheduledTime).format('YYYY-MM-DD')%>T<%=moment(discussion.scheduledTime).format('hh:mm')%>" name="editscheduledtime">
+                        <button class="btn btn-primary black darken-1" >Change</button>
+                    </form>
+              </div>
+              <div class="card-action text-center">
+                <a class="btn btn-primary black darken-1" href="/teacher/dashboard/enter/discussion/classroom/<%=discussion.roomId%>?email=<%=currentUser.email%>&room=<%=discussion.roomId%>" >Enter Class</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="seperator mt-5 "></div>
+
+    <div id="allow" class="container">
+        <div class="jumbotron white">
+            <div class="row">
+              <div class="col s12 m5">
+                <h4 class="theme-heading text-center">Allowed students</h4>
+                <div class="card-panel white-text" style="background-color: #023047; font-size: medium;">
+                  <% discussion.students.forEach(function(stud){%>
+                    <%students.forEach(function(student){%>
+                         <%if(student.email===stud.email){%>
+                             <div class="card-content mb-2"> Name : <%=student.name%>     ,     Mail : <%=student.email%></div>
+                         <%}%>
+                    <%})%>
+                 <%})%>
+                </div>
+              </div>
+            </div>
+            <form action="/teacher/dashboard/discussion/<%=discussion.roomId%>" method="POST">
+              <div class="row">
+                <div class="col s12 m5">
+                  <h4 class="theme-heading text-center">Allow Students to participate</h4>
+                  <div class="card-panel" style="background-color: #023047; font-size: medium;">
+                    <input type="checkbox" id="all" style="opacity: 1; pointer-events: auto; position: relative">
+                    Select All
+
+                  <%students.forEach(function(student){%>
+                    <%if(discussion.students.findIndex(x=>x.email === student.email)===-1){%>
+                              <div class="card-content mb-2">
+                                  <input type="checkbox" 
+                                  style="opacity:1;pointer-events:auto;position: relative;"  
+                                  value="<%=student.email%>" 
+                                  name="main"
+                                  class="al"
+                                  >
+                             Student :<%=student.name%>     ,     Mail: <%=student.email%>
+                              </div>
+                        <%}%>
+                    <%})%>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+              <input class="btn btn-primary" type="submit">
+              </div>
+            </form>
+            <a class="btn white black-text mt-5" href="/teacher/dashboard/discussion/sendemail/<%=discussion.roomId%>/<%=discussion.email%>"><i class="fas fa-envelope mr-2"></i>Send Invitation mail to all</a>
+        </div>
+    </div>
+    <div class="seperator mt-5 "></div>
+
+    <div id="upload-t" class="container mt-5">
+        <div class="row">
+          <div class="col-md-6 card m-auto">
+              <h1 class="text-center display-4 my-4">Pre-requisites / Notes</h1>
+                  <form action="/teacher/dashboard/adddoc/toroom" method="POST" enctype="multipart/form-data">
+                      <input type="text" name="roomid" id="roomid" value="<%=discussion.roomId%>" hidden>
+                      <input type="text" name="email" id="email" value="<%=discussion.email%>" hidden>
+                      <input type="text" name="filename" id="filename" placeholder="Name the file" required>
+                      <div class="file-field input-field">
+                        <div class="btn grey">
+                          <span>Browse File</span>
+                          <input type="file" name="file" id="file" class="custom-file-input" required>
+                        </div>
+                        <div class="file-path-wrapper">
+                          <input class="file-path validate" type="text">
+                        </div>
+                      </div>
+    
+                      <input type="submit" value="Submit" class="btn btn-primary btn-block">
+                  </form>
+              <hr>
+          </div>
+        </div>
+    </div>
+    
+    <div class="container mt-5">
+        <div class="card">
+          <span class="card-content text-center">
+            <div class="card-title mt-1">Uploaded</div>
+        <% if(discussion.files.length!==0){ %>
+            <% discussion.files.forEach(function(file) { %>
+              <div class="card card-body mb-3">
+                <h5><%= file.filename %></h5>
+                <%if( file.contentType === 'image/jpeg' || file.contentType === 'image/png'){%>
+                    <img src="/teacher/dashboard/getfile/file/<%= file.filename %>" style="height:200px;width:40%;"alt="">
+                <%}else if(file.contentType === "application/pdf" || file.contentType === "application/pdf"){%>
+                    <img src="" style="height:200px;width:40%;"alt="Any pdf logo">                
+                <%}%>
+                <a href="/teacher/dashboard/getfile/file/<%= file.filename %>" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>
+                <form method="POST" action="/teacher/dashboard/files/doc/delete/<%=file.id%>/<%=discussion.roomId%>/<%=discussion.email%>?_method=DELETE">
+                    <button class="btn btn-danger btn-block mt-4">Delete</button>
+                </form>
+              </div>
+              <% }) %>
+                <% } else { %>
+                  <p>No files to show</p>
+                  <% } %>
+                </span>
+        </div>
+    </div>
+
+    <div class="seperator mt-5 "></div>
+
+    <div id="chat-teacher" class="T-chat modal">
+      <div class="modal-footer">
+        <h4 class="theme-heading text-center" style="margin: auto;" >Chat</h4>
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat"><i class="fas fa-times red-text"></i></a>
+      </div>
+      <div class="modal-content">
+        <div style="height: 100%;margin-bottom: 0rem !important;">
+          <div id="sidebar" class="chat__sidebar"> </div>
+  
+            <div>
+                <div id="messages"> 
+                <%texts.forEach((per)=>{%>
+                    <div>
+                        <span><%=per.username%></span> <%=moment(per.createdAt).format('h:mm a')%>
+                        <p><%=per.message%></p>
+                    </div>
+                  <%})%>
+                </div>
+                <div>
+                    <form id="message-form">
+                        <input type="hidden" id="roomId" value="<%=discussion.roomId%>" name="roomId" type="text">
+                        <input type="hidden" id="username" value="<%=currentUser.name%>" name="username" type="text">
+  
+                        <input name="message" id="ip" type="text" placeholder="Message" required autocomplete="off">
+                        <button class="btn" id="but">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+<script>
+  var teacherNav = document.querySelectorAll('#teacher-nav');
+  teacherNav.forEach((teacherNav) => {
+  teacherNav.innerHTML = '';
+  const navLinks = `<a id="dshbrd" href="https://eduon-unifolks.herokuapp.com/teacher/dashboard" onclick="dashboard()"
+        ><i class="fas fa-desktop"></i><span>Dashboard</span></a>
+        <a href="#allow"> <i class="far fa-check-circle"></i><span>Allow</span></a>
+      <a class="modal-trigger" href="#chat-teacher"><i class="fas fa-comments"></i><span>Chat</span>
+    </a>
+      <a href="#upload-t"><i class="fas fa-upload"></i><span>Upload</span></a>
+      <a class='hme' href=''><i class="fas fa-info-circle"></i><span>Home</span></a>
+      <a href="#"><i class="fas fa-sliders-h"></i><span>Settings</span></a>`;
+    teacherNav.innerHTML = navLinks;});
+  document.querySelectorAll('.hme').forEach(link => link.href = location.hostname);
+</script>
+<script>
+    function showTime() {
+      var i = 0;
+      document.querySelectorAll('#dd p').forEach((d) => {
+        if (i === 0) {
+          d.textContent = 'Date: ' + moment(Date.now()).format('Do-MM-YYYY');
+          i = 1;
+        } else {
+          d.textContent = 'Time: ' + moment(Date.now()).format('hh.mm.ss a');
+          i = 0;
+        }
+      });
+    }
+    setInterval(showTime, 1);
+  </script>
+<script id="message-template" type="text/html">
+  <div>
+    <span>{{username}}</span>  {{createdAt}}
+    <br/>
+    <p>{{message}}</p>
+</div>
+</script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+<script>
+    const socket=io();
+    const $messageForm=document.querySelector("#message-form");
+    const $messageFormInput = $messageForm.querySelector('#ip');
+    const $messageFormButton = $messageForm.querySelector('#but');
+    const $messages=document.querySelector('#messages');
+
+    const x= Qs.parse(location.search,{ignoreQueryPrefix:true});
+    const useremail=x.user;
+    const room=x.room;
+    console.log(useremail);console.log(room);
+    const messageTemplate=document.querySelector('#message-template').innerHTML;
+
+    socket.emit('join',{useremail,room},(error)=>{
+        if(error){
+            alert(error);
+            location.href="/teacher/dashboard";
+        }
+    });
+
+    socket.on('message',(msg)=>{
+        const html = Mustache.render(messageTemplate,{
+            message:msg.message,
+            username:msg.username,
+            roomId : msg.roomId,
+            createdAt:moment(msg.createdAt).format('h:mm a')
+        });
+        $messages.insertAdjacentHTML('beforeend',html);
+    });
+
+    $messageForm.addEventListener('submit',(e)=>{
+       e.preventDefault();
+       const message = e.target.elements.message.value;
+       const roomId = e.target.elements.roomId.value;
+       const username = e.target.elements.username.value;
+
+     
+       socket.emit('sendMessage',{
+           message,
+           roomId,
+           username
+       },(error)=>{
+        $messageFormButton.removeAttribute('disabled');
+        $messageFormInput.value="";
+        $messageFormInput.focus();
+        if(error){
+            return console.log(error);
+        } 
+        console.log("Message delivered");
+    });
+});
+</script>
+
+<script>
+  let all = document.getElementById("all");
+  var clked = 0;
+  all.addEventListener('click',()=>{
+    if(clked == 0){
+      document.querySelectorAll(".al").forEach((k)=>{
+         k.checked = true;
+      })
+      clked = 1;
+    }else{
+      document.querySelectorAll(".al").forEach((k)=>{
+         k.checked = false;
+      })
+      clked = 0;
+    }
+  })
+</script>
+
+
+<%- include('partials/footer'); -%>

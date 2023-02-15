@@ -1,75 +1,100 @@
 <%- include('partials/header'); -%>
-<nav class="navbar navbar-expand-lg p-3 home-nav">
-  <a class="navbar-brand ml-5 mr-4" href="#"><img class="brandSvg" src="/svg/TFH.svg" alt=""></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon" style="color: #FC0254 !important; font-size: xx-large; font-weight: 100;" ><i class="fa fa-bars" aria-hidden="true"></i></span>
-  </button>
+<style>
+.hr-w{
+  width: 60px !important;
+}
+</style>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/auth/google">Dashboard <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/auth/google">Login</a>
-      </li>
-      
-    </ul>
-    <form action="/auth/google" class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+<body>
+  <div class="main-container">
+    <img class="mainBg" src="/images/output-onlinepngtools.png" alt="mainBg" />
+    <img class="mainBg-mob" src="/svg/mob-mainbg.png" alt="mainBg-mob" />
   </div>
-</nav>
+  <div class="container pt-5">
+    <div class="container main-abt mt-5">
+      <p class="mt-5">
+        <span class="theme-home">EduOn</span> , a three friends initiative , makes online education more
+        secure , productive, reduces plagiarism to null and reduces stress on
+        children with the help of private counselling sesssions.
+      </p>
+    </div>
+  </div>
+  <div class="container mt-5">
+  </div>
+</body>
 
-<div id="content" class="p-4 p-md-5 landing">
-  <div class="container main-div">
-    <div class="heading">
-      <div class="head-primary">
-      <p>Welcome  To  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TeamForHack!</p>
-      </div>
-      <div class="head-secondary">
-        <p style="width:500px;"><span>Where Ideas begin.</span><br></p>
-        <p style="margin-top:-12px;">Get in touch with awesome developers just by one click.
-          <br> Work on innovative ideas, collabarate and meet new developers <br>across the globe.</p>
-      </div>
-    </div>
-    <div>
-      <img class="homeSvg" src="/svg/work.svg" alt="">
-    </div>
-  </div>
+<footer class="page-footer font-small mt-5" style="background-color: #3E4551;padding-top: 0px;"> 
+
+    <div style="background-color: #023047;">
+      <div class="container">
+        <div class="row py-4 d-flex align-items-center">
+          <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+            <h6 class="mb-0">Get connected with us on social networks!</h6>
+          </div>
+          <div class="col-md-6 col-lg-7 text-center text-md-right">
+            <a class="fb-ic">
+              <i class="fab fa-facebook-f white-text mr-4"> </i>
+            </a>
+            <a class="tw-ic">
+              <i class="fab fa-twitter white-text mr-4"> </i>
+            </a>
+            <a class="gplus-ic">
+              <i class="fab fa-google-plus-g white-text mr-4"> </i>
+            </a>
+            <a class="li-ic">
+              <i class="fab fa-linkedin-in white-text mr-4"> </i>
+            </a>
+            <a class="ins-ic">
+              <i class="fab fa-instagram white-text"> </i>
+            </a>
   
-</div>
-<div class="bbg mn p-5 mb-4 text-center">
-  <p>
-    "Everybody has a creative potential and from the moment you can express this creative potential, you can start changing the world"
-  </p>
-</div>
-<div class="container usp p-5">
-  <div class="text-center">
-    <img src="/images/globe.jpeg" alt="">
-    <p>Meet developers
-      across the globe</p>
-  </div><div class="text-center">
-    <img src="/images/collab.jpeg" alt="">
-    <p>Collaborate
-      and team up</p>
-  </div><div class="text-center">
-    <img src="/images/bulb.jpeg" alt="">
-    <p>Work on 
-      innovative ideas</p>
-  </div>
-</div>
-    <div class="bbg cont text-center pt-4 text-white">
-      <div class="container soc-icons " >
-        <i class="fa fa-facebook" aria-hidden="true"></i>
-        <i class="fa fa-instagram" aria-hidden="true"></i>
-        <i class="fa fa-twitter" aria-hidden="true"></i>
-      </div>
-      <div class="display-5 p-5 text-white">
-        Copyright <i class="fa fa-copyright" aria-hidden="true"></i> 2020
+          </div>
+        </div>
       </div>
     </div>
-</div>
+    <div class="container text-center  mt-5">
+    <h6 class="text-uppercase font-weight-bold">Developer Details</h6>
+          <hr class="teal accent-3 mb-4 mt-0 d-inline-block text-md-left" style="width: 90px;">
+    </div>
+    <div class="container text-center text-md-left mt-5">
+      <div class="row mt-3 dark-grey-text">
+        <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
+          <h6 class="text-uppercase font-weight-bold">Lav Joshi</h6>
+          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto hr-w">
+          <p>Details.</p>
   
-<%- include('partials/footer'); -%>
+        </div>
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <h6 class="text-uppercase font-weight-bold">Ashutosh Yadav</h6>
+          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto hr-w">
+          <p>
+            <a class="white-text" href="#!">Details</a>
+          </p>
+
+  
+        </div>
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <h6 class="text-uppercase font-weight-bold">Harshit Gupta</h6>
+          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto hr-w">
+          <p>
+            <a class="white-text" href="#!">Details</a>
+          </p>
+  
+        </div>
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <h6 class="text-uppercase font-weight-bold">Contact</h6>
+          <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto hr-w">
+          <p>
+            <i class="fas fa-home mr-3"></i>India</p>
+          <p>
+            <i class="fas fa-envelope mr-3"></i> eduon@gmail.com</p>
+          <p>
+            <i class="fas fa-phone mr-3"></i> +91 99XXXXXXX</p>
+          <p>
+            <i class="fas fa-print mr-3"></i> 086XXXXXXXX</p>
+  
+        </div>
+      </div>
+    </div>
+  </footer>
+  <%- include('partials/footer'); -%>

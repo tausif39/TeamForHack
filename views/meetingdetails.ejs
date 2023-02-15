@@ -1,0 +1,297 @@
+<%- include('partials/side-nav'); -%>
+<link rel="stylesheet" href="/leaderBoard.css" />
+
+<div class="side-nav-content p-3">
+  <div id="dd" class="scheduled mb-3" style="justify-content: space-between">
+    <p></p>
+    <p></p>
+  </div>
+  <div class="stud-row">
+    <div class="row">
+      <div class="col s12 m7">
+        <div class="card" style="width: 70%;">
+          <div class="card-title text-center p-3 blue-grey lighten-5">Test Details</div>
+          <div class="card-image p-3" style="height: 40vh; overflow: hidden;" >
+            <img src="/images/test.svg" style="height: 100%;">
+          </div>
+            <div class="card-content">
+                <div style="font-size: larger;"><span >Room Id :</span>  <%=meeting.roomId%></div>
+                <div style="font-size: larger;"> Time : <%=moment(meeting.scheduledTime).format('MMMM Do YYYY, h:mm:ss a')%></div>
+                <form class="mt-4" action="/teacher/meeting/updatetiming/<%=meeting.roomId%>" method="POST" >
+                    <label>Edit Scheduled Time</label>
+                    <input type="datetime-local" value="<%=moment(meeting.scheduledTime).format('YYYY-MM-DD')%>T<%=moment(meeting.scheduledTime).format('hh:mm')%>" name="editscheduledtime">
+                    <button class="btn btn-primary black darken-1" >Change</button>
+                </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<p id="scheduledTime" hidden><%=meeting.scheduledTime%></p>
+<p id="length" hidden><%=meeting.questions.length%></p>
+
+
+<div class="seperator mt-5 "></div>
+
+<p id="timePass" hidden><%=meeting.scheduledTime%></p>
+<p id="length" hidden><%=meeting.questions.length%></p>
+    <div class="stud-row mt-5">
+      <div class="row">
+        <div class="col s12 m7">
+          <div class="card" style="width: 70%">
+            <div class="card-title text-center p-3 blue-grey lighten-5">
+              Question Paper
+            </div>
+          <div class="card-content">
+            <button type="button" class="btn btn-primary" ariapressed="false" onclick="newQuestion(this)">Add New Question</button>
+            <div id="addQuestion" style="display: none;">  
+              <form action="/teacher/dashboard/question/<%=meeting.roomId%>" method="POST">
+                  
+                  <label style="font-size: larger;color: rgba(0, 0, 0, 0.829);">
+                    Question:
+                  </label>
+                  <input
+                      type="text"
+                      placeholder="Enter Question here"
+                      name="question"
+                      required
+                    /> 
+                    <label class="mt-3" style="font-size: larger;color: rgba(0, 0, 0, 0.829);">
+                      Options:
+                    </label><br />
+                  <label>
+                    <input
+                      type="text"
+                      placeholder="Option 1"
+                      name="option1"
+                      required
+                    /> </label
+                  ><br />
+                  <label>
+                    <input
+                      type="text"
+                      placeholder="Option 2"
+                      name="option2"
+                      required
+                    /> </label
+                  ><br />
+                  <label>
+                    <input
+                      type="text"
+                      placeholder="Option 3"
+                      name="option3"
+                      required
+                    /> </label
+                  ><br />
+                  <label>
+                    <input
+                      type="text"
+                      placeholder="Option 4"
+                      name="option4"
+                      required
+                    /> 
+                  </label><br />
+                  <label class="mt-3"  style="font-size: larger;color: rgba(0, 0, 0, 0.829);">
+                    Answer: </label>
+                    <input type="text" placeholder="Answer" name="answer" /><br />
+                  <input type="submit" class="btn btn-secondary" value="Done" />
+                </form>
+            </div>
+            <br><br>
+            <%questions.forEach((ques)=>{%>
+              <div>
+                <label style="font-size: larger;color: rgba(0, 0, 0, 0.829);">
+                  Question:
+                </label>
+                <div><%=ques.question%></div>
+                <div>1. <%=ques.option1%> <br /></div>
+                <div>2. <%=ques.option2%> <br /></div>
+                <div>3. <%=ques.option3%> <br /></div>
+                <div>4. <%=ques.option4%><br /></div>
+                <label class="mt-3"  style="font-size: larger;color: rgba(0, 0, 0, 0.829);">
+                  Answer: </label><b> <%=ques.answer%> </b><br />
+                <a
+                  href="/teacher/dashboard/question/delete/<%=ques.question%>/<%=meeting.roomId%>"
+                  >Delete</a
+                >
+              </div>
+              <br />
+            <%})%>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+<div class="seperator mt-5 "></div>
+<div id="allow" class="container">
+  <div class="jumbotron white">
+      <div class="row">
+        <div class="col s12 m5">
+          <h4 class="theme-heading text-center">Enrolled students</h4>
+          <div class="card-panel white-text " style="background-color: #023047; font-size: medium;">
+
+            <% meeting.students.forEach(function(studentemail){%>
+              <%students.forEach(function(student){%>
+                <%if(student.email===studentemail){%>
+                  <div class="scheduled mb-2" style="justify-content: space-between;">
+                    <div class="card-content "> Name : <%=student.name%>     ,     Mail : <%=student.email%></div>
+                <a class="white-text btn red" href="/teacher/dashboard/delete/student/<%=meeting.roomId%>/<%=studentemail%>">
+                  Remove</a>
+                  </div>
+                <%}%>
+              <%})%> 
+            <%})%>
+          </div>
+        </div>
+      </div>
+      <%if(meeting.students.length !== students.length){%>
+      <form action="/teacher/dashboard/<%=meeting.roomId%>"  method="POST">
+        <div class="row white-text">
+          <div class="col s12 m5">
+            <h4 class="theme-heading text-center">Allow Students to participate</h4>
+            <div class="card-panel" style="background-color: #023047; font-size: medium;">
+              <input type="checkbox" id="all" style="opacity: 1; pointer-events: auto; position: relative">
+                    Select All
+              <%students.forEach(function(student){%>
+                <%if(meeting.students.indexOf(student.email)===-1){%>
+                  <div class="card-content mb-2">
+                <input
+                  type="checkbox"
+                  style="opacity: 1; pointer-events: auto; position: relative"
+                  value="<%=student.email%>"
+                  name="main"
+                  class="al"
+                />
+                 Name : <%=student.name%>     ,     Mail : <%=student.email%></div>
+
+                <%}%> <%})%>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+        <input class="btn btn-primary" type="submit">
+        </div>
+      </form>
+      <%}%>
+      <a class="btn white black-text mt-5" href="/teacher/dashboard/meeting/sendmail/<%=meeting.roomId%>/<%=meeting.email%>"><i class="fas fa-envelope mr-2"></i>Send Invitation mail to all</a>
+  </div>
+</div>
+
+    <div class="stud-row mt-5">
+      <div class="leader-back mt-5">
+        <div class="leader-header">LeaderBoard</div>
+        <div id="leaderboard"></div>    
+      </div>
+    </div>
+    
+</div>
+
+<script>
+  const quesTime = 20000;
+      var teacherNav = document.querySelectorAll("#teacher-nav");
+      teacherNav.forEach((teacherNav) => {
+        teacherNav.innerHTML = "";
+        const navLinks = `<a id="dshbrd" href="https://eduon-unifolks.herokuapp.com/teacher/dashboard"
+        ><i class="fas fa-desktop"></i><span>Dashboard</span></a
+      >
+      <a class="hme" href="#"><i class="fas fa-info-circle"></i><span>Home</span></a>
+      <a href="#"><i class="fas fa-sliders-h"></i><span>Settings</span></a>`;
+    teacherNav.innerHTML = navLinks;
+    
+  });
+  
+  document.querySelectorAll('.hme').forEach(link => link.href = location.hostname);
+
+      function showTime() {
+        var i = 0;
+        document.querySelectorAll("#dd p").forEach((d) => {
+          if (i === 0) {
+            d.textContent = "Date: " + moment(Date.now()).format("Do-MM-YYYY");
+            i = 1;
+          } else {
+            d.textContent = "Time: " + moment(Date.now()).format("hh.mm.ss a");
+            i = 0;
+          }
+        });
+      }
+      setInterval(showTime, 1);
+
+      const leaderBoard = document.getElementById("leaderboard");
+      const length = document.getElementById("length");
+
+      if (
+        new Date().getTime() >=
+        new Date(document.querySelector('#timePass').textContent).getTime() +
+          Number(length.textContent) *quesTime
+      ) {
+        fetch(`/teacher/dashboard/leaderboard/<%=meeting.roomId%>`).then(
+          (response) => {
+            response.json().then((data) => {
+              const leaderBoard = document.getElementById('leaderboard');
+
+              var list = document.createElement('ol');
+              for (let i = 0; i < data.names.length; i++) {
+                item = document.createElement('li');
+                item.className = 'leader-li';
+                item.innerHTML = `<div class="hname">${i + 1}. ${
+                  data.names[i]
+                } :</div><div class="list_num">${data.totalmarks[i]}</div>`;
+                list.appendChild(item);
+              }
+              leaderBoard.appendChild(list);
+              console.log(data);
+            });
+          }
+        );
+      } else {
+        const leaderBoard = document.getElementById('leaderboard');
+        let item = document.createElement('div');
+        item.className = 'hname text-center';
+        item.textContent =
+          'LeaderBoard will be generated once the Test is Finished.';
+        leaderBoard.appendChild(item);
+      }
+      function newQuestion(e){
+        const div = document.querySelector("#addQuestion")
+        if(e.areapressed == "false"){
+          div.style.display = "none";
+          e.areapressed = "true";
+        } else {
+          div.style.display = "block";
+          e.areapressed = "false";
+        }
+      }
+</script>
+
+<script>
+  let all = document.getElementById("all");
+  var clked = 0;
+  all.addEventListener('click',()=>{
+    if(clked == 0){
+      document.querySelectorAll(".al").forEach((k)=>{
+         k.checked = true;
+      })
+      clked = 1;
+    }else{
+      document.querySelectorAll(".al").forEach((k)=>{
+         k.checked = false;
+      })
+      clked = 0;
+    }
+  })
+</script>
+
+<script>
+  function newQuestion(e){
+        const div = document.querySelector("#addQuestion")
+        if(e.areapressed == "false"){
+          div.style.display = "none";
+          e.areapressed = "true";
+        } else {
+          div.style.display = "block";
+          e.areapressed = "false";
+        }
+      }
+</script>
+
+    <%- include('partials/footer'); -%>
